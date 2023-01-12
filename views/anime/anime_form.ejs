@@ -1,0 +1,66 @@
+<head>
+  <title><%= title %> </title>
+  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<% 
+  let romaji = '';
+  let english = '';
+  let native = '';
+  let summary = '';
+  let episodes = '';
+  let status = '';
+  let start_date = '';
+  let end_date = '';
+  if (typeof anime != "undefined") {
+    romaji = anime.romaji;
+    english = anime.english;
+    native = anime.native;
+    summary = anime.summary;
+    episodes = anime.episodes;
+    status = anime.status;
+    start_date = anime.start_date;
+    end_date = anime.end_date;
+  }
+%>
+
+<body>
+  <h1><%= title %> </h1>
+  <form action="" method="post">
+    <div class="form-group">
+      <div class="form-outline">
+        <input type="text" class="form-control" id="romaji" name="romaji" value=<%= romaji %>>
+        <label for="romaji" class="form-label">Romaji Name</label>
+      </div>
+      <div class="form-outline">
+        <input type="text" class="form-control" id="english" name="english" value=<%= english %>>
+        <label for="english" class="form-label">English Name</label>
+      </div>
+      <div class="form-outline">
+        <input type="text" class="form-control" id="native" name="native" value=<%= native %>>
+        <label for="native" class="form-label">Native</label>
+      </div>
+      <div class="form-outline">
+        <input type="number" class="form-control" id="episodes" name="episodes" p value=<%= episodes %>>
+        <label for="episode" class="form-label">Episodes</label>
+      </div>
+      <div class="form-outline">
+        <input type="text" class="form-control" id="status" name="status" value=<%= status %>>
+        <label for="status" class="form-label">Status</label>
+      </div>
+      <input class="datepicker" id="start_date" placeholder="Start Date" value=<%= start_date %>>
+      <input class="datepicker" id="end_date" placeholder="End Date" value=<%= start_date %>>
+    </div>
+    <button class="btn btn-primary fs-5" type="submit">Submit</button>
+  </form>
+  <% if (typeof errors != 'undefined') { %> <div class="alert alert-danger" role="alert">
+    <ul>
+      <% for (let error of errors) { %>
+      <li><%= error.msg %></li>
+      <% } %>
+    </ul>
+  </div>
+  <% } %>
+  
+</body>

@@ -1,0 +1,20 @@
+<head>
+  <title><%= title %> </title>
+</head>
+
+<body>
+  <h1><%= title %> </h1>
+  <% if (anime_list.length == 0) { %>
+  <p>There is no anime.</p>
+  <% } %>
+  <ul>
+    <% for( let anime of anime_list ) { %>
+    <li>
+      <a href=<%= anime.url %>>
+        <%= anime.romaji %>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+  <a class="btn btn-primary" href="anime/new">Add Anime</a>
+</body>
