@@ -13,6 +13,7 @@
   let status = '';
   let start_date = '';
   let end_date = '';
+  let season = '';
   if (typeof anime != "undefined") {
     romaji = anime.romaji;
     english = anime.english;
@@ -22,6 +23,7 @@
     status = anime.status;
     start_date = anime.start_date;
     end_date = anime.end_date;
+    season = anime.season;
   }
 %>
 
@@ -39,7 +41,11 @@
       </div>
       <div class="form-outline">
         <input type="text" class="form-control" id="native" name="native" value=<%= native %>>
-        <label for="native" class="form-label">Native</label>
+        <label for="native" class="form-label">Native Name</label>
+      </div>
+      <div class="form-outline">
+        <input type="text" class="form-control" id="summary" name="summary" value=<%= summary %>>
+        <label for="summary" class="form-label">Summary</label>
       </div>
       <div class="form-outline">
         <input type="number" class="form-control" id="episodes" name="episodes" p value=<%= episodes %>>
@@ -48,6 +54,10 @@
       <div class="form-outline">
         <input type="text" class="form-control" id="status" name="status" value=<%= status %>>
         <label for="status" class="form-label">Status</label>
+      </div>
+      <div class="form-outline">
+        <input type="text" class="form-control" id="season" name="season" value=<%= season %>>
+        <label for="season" class="form-label">Season</label>
       </div>
       <input class="datepicker" id="start_date" placeholder="Start Date" value=<%= start_date %>>
       <input class="datepicker" id="end_date" placeholder="End Date" value=<%= start_date %>>
@@ -62,5 +72,5 @@
     </ul>
   </div>
   <% } %>
-  
+
 </body>
