@@ -1,7 +1,5 @@
 <head>
   <title><%= title %> </title>
-  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
-  <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <% 
@@ -9,6 +7,7 @@
   let english = '';
   let native = '';
   let summary = '';
+  let format = '';
   let episodes = '';
   let status = '';
   let start_date = '';
@@ -19,6 +18,7 @@
     english = anime.english;
     native = anime.native;
     summary = anime.summary;
+    format = anime.format;
     episodes = anime.episodes;
     status = anime.status;
     start_date = anime.start_date;
@@ -48,7 +48,11 @@
         <label for="summary" class="form-label">Summary</label>
       </div>
       <div class="form-outline">
-        <input type="number" class="form-control" id="episodes" name="episodes" p value=<%= episodes %>>
+        <input type="text" class="form-control" id="format" name="format" value=<%= format %>>
+        <label for="format" class="form-label">Format</label>
+      </div>
+      <div class="form-outline">
+        <input type="number" class="form-control" id="episodes" name="episodes" min="1" value=<%= episodes %>>
         <label for="episode" class="form-label">Episodes</label>
       </div>
       <div class="form-outline">

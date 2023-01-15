@@ -30,6 +30,20 @@ router.post("/new", [
     .isLength({ min: 1 })
     .escape()
     .withMessage("Romaji must be specified"),
+  body("english").trim().escape(),
+  body("native").trim().escape(),
+  body("summary").trim().escape(),
+  body("format").trim().escape(),
+  body("episodes").trim().escape(),
+  body("status").trim().escape(),
+  body("start_date", "Invalid start date")
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate(),
+  body("end_date", "Invalid end date")
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -47,10 +61,11 @@ router.post("/new", [
       english: req.body.english,
       native: req.body.native,
       summary: req.body.summary,
+      format: req.body.format == "" ? "Unknown" : req.body.format,
       episodes: req.body.episodes,
       status: req.body.status,
       start_date: req.body.start_date,
-      end_date: req.body.end_date
+      end_date: req.body.end_date,
     });
 
     anime.save(function (err) {
@@ -62,5 +77,25 @@ router.post("/new", [
     });
   },
 ]);
+
+//GET request for one anime.
+router.get("/:id", (req, res, next) => {
+  Anime.findById(req.params.id).exec(function (err, anime) {
+    if (err) {
+      return next(err);
+    }
+
+    if (anime == null) {
+      const err = new Error("Anime not found");
+      err.status = 404;
+      return next(err);
+    }
+
+    res.render("anime/anime_detail", {
+      title: anime.romaji,
+      anime,
+    });
+  });
+});
 
 module.exports = router;

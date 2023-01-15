@@ -7,15 +7,16 @@ const AnimeSchema = new Schema({
   english: {type: String},
   native: {type: String},
   summary: {type: String},
+  format: {type: String},
   episodes: {type: Number},
-  status: {type: String, required: true},
+  status: {type: String},
   start_date: {type: Date},
   end_date: {type: Date},
   season: {type: String}
 })
 
 AnimeSchema.virtual("url").get(function() {
-  return "/anime/${this._id}";
+  return `/anime/${this._id}`;
 })
 
 module.exports = mongoose.model("Anime", AnimeSchema);
