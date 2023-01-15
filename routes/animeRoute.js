@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Anime = require("../models/anime");
+const he = require("he");
 const { body, validationResult } = require("express-validator");
 
 router.get("/", (req, res, next) => {
@@ -11,7 +12,7 @@ router.get("/", (req, res, next) => {
         return next(err);
       }
 
-      res.render("anime/anime", {
+      res.render("anime/anime_list", {
         title: "Anime List",
         anime_list,
       });
@@ -32,18 +33,11 @@ router.post("/new", [
     .withMessage("Romaji must be specified"),
   body("english").trim().escape(),
   body("native").trim().escape(),
-  body("summary").trim().escape(),
+  body("summary").trim(),
   body("format").trim().escape(),
   body("episodes").trim().escape(),
   body("status").trim().escape(),
-  body("start_date", "Invalid start date")
-    .optional({ checkFalsy: true })
-    .isISO8601()
-    .toDate(),
-  body("end_date", "Invalid end date")
-    .optional({ checkFalsy: true })
-    .isISO8601()
-    .toDate(),
+  body("season").trim().escape(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -60,12 +54,14 @@ router.post("/new", [
       romaji: req.body.romaji,
       english: req.body.english,
       native: req.body.native,
-      summary: req.body.summary,
+      summary:
+        req.body.summary == "" ? "No summary added yet" : req.body.summary,
       format: req.body.format == "" ? "Unknown" : req.body.format,
-      episodes: req.body.episodes,
+      episodes: req.body.episodes == "" ? "Unknown" : req.body.episodes,
       status: req.body.status,
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
+      start_date: req.body.start_date == "" ? "Unknown" : req.body.start_date,
+      end_date: req.body.end_date == "" ? "Unknown" : req.body.end_date,
+      season: req.body.season == "" ? "Unknown" : req.body.season,
     });
 
     anime.save(function (err) {

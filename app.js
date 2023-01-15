@@ -16,7 +16,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 const indexRouter = require("./routes/index");
-const animeRouter = require("./routes/anime");
+const animeRouter = require("./routes/animeRoute");
 const compression = require("compression");
 
 let app = express();

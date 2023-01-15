@@ -1,3 +1,4 @@
+const he = require("he");
 <head>
   <title><%= title %> </title>
 </head>
@@ -17,12 +18,12 @@
     romaji = anime.romaji;
     english = anime.english;
     native = anime.native;
-    summary = anime.summary;
+    summary = he.decode(anime.summary);
     format = anime.format;
     episodes = anime.episodes;
     status = anime.status;
-    start_date = anime.start_date;
-    end_date = anime.end_date;
+    start_date = anime.start_date_formatted;
+    end_date = anime.end_date_formatted;
     season = anime.season;
   }
 %>
@@ -32,39 +33,39 @@
   <form action="" method="post">
     <div class="form-group">
       <div class="form-outline">
-        <input type="text" class="form-control" id="romaji" name="romaji" value=<%= romaji %>>
+        <input type="text" class="form-control" id="romaji" name="romaji" value="<%= romaji %>">
         <label for="romaji" class="form-label">Romaji Name</label>
       </div>
       <div class="form-outline">
-        <input type="text" class="form-control" id="english" name="english" value=<%= english %>>
+        <input type="text" class="form-control" id="english" name="english" value="<%= english %>">
         <label for="english" class="form-label">English Name</label>
       </div>
       <div class="form-outline">
-        <input type="text" class="form-control" id="native" name="native" value=<%= native %>>
+        <input type="text" class="form-control" id="native" name="native" value="<%= native %>">
         <label for="native" class="form-label">Native Name</label>
       </div>
       <div class="form-outline">
-        <input type="text" class="form-control" id="summary" name="summary" value=<%= summary %>>
+        <input type="text" class="form-control" id="summary" name="summary" value="<%= summary %>">
         <label for="summary" class="form-label">Summary</label>
       </div>
       <div class="form-outline">
-        <input type="text" class="form-control" id="format" name="format" value=<%= format %>>
+        <input type="text" class="form-control" id="format" name="format" value="<%= format %>">
         <label for="format" class="form-label">Format</label>
       </div>
       <div class="form-outline">
-        <input type="number" class="form-control" id="episodes" name="episodes" min="1" value=<%= episodes %>>
+        <input type="number" class="form-control" id="episodes" name="episodes" min="1" value="<%= episodes %>">
         <label for="episode" class="form-label">Episodes</label>
       </div>
       <div class="form-outline">
-        <input type="text" class="form-control" id="status" name="status" value=<%= status %>>
+        <input type="text" class="form-control" id="status" name="status" value="<%= status %>">
         <label for="status" class="form-label">Status</label>
       </div>
       <div class="form-outline">
-        <input type="text" class="form-control" id="season" name="season" value=<%= season %>>
+        <input type="text" class="form-control" id="season" name="season" value="<%= season %>">
         <label for="season" class="form-label">Season</label>
       </div>
-      <input class="datepicker" id="start_date" placeholder="Start Date" value=<%= start_date %>>
-      <input class="datepicker" id="end_date" placeholder="End Date" value=<%= start_date %>>
+      <input class="datepicker" id="start_date" placeholder="Start Date" name="start_date" value=<%= start_date %>>
+      <input class="datepicker" id="end_date" placeholder="End Date" name="end_date" value=<%= end_date %>>
     </div>
     <button class="btn btn-primary fs-5" type="submit">Submit</button>
   </form>
