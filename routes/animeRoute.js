@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Anime = require("../models/anime");
-const he = require("he");
+const async = require("async");
 const { body, validationResult } = require("express-validator");
+const Anime = require("../models/anime");
 
 router.get("/", (req, res, next) => {
   Anime.find()
@@ -91,6 +91,35 @@ router.get("/:id", (req, res, next) => {
       title: anime.romaji,
       anime,
     });
+  });
+});
+
+//GET request for anime delete.
+router.get("/:id/delete", (req, res, next) => {
+  Anime.findById(req.params.id).exec(function (err, anime) {
+    if (err) {
+      return next(err);
+    }
+
+    if (anime == null) {
+      res.redirect("/anime");
+    }
+
+    res.render("anime/anime_delete", {
+      title: anime.romaji,
+      anime
+    });
+  });
+});
+
+//POST request for anime delete.
+router.post("/:id/delete", (req, res, next) => {
+  Anime.findByIdAndRemove(req.params.id, function deleteAnime(err) {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect("/anime");
   });
 });
 

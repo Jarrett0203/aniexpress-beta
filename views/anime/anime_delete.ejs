@@ -1,0 +1,16 @@
+<head>
+  <title><%= title %> </title>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Do you really want to delete this anime?</p>
+  <form action="" method="post">
+    <div class="form-group row">
+      <input type="hidden" name="animeid" class="form-control" required="true" value=<%= anime._id %>>
+    </div>
+    <div class="col-6">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
+  </form>
+</body>
