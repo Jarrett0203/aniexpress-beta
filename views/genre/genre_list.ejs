@@ -1,0 +1,16 @@
+<head>
+  <title><%= title %> </title>
+</head>
+
+<body>
+  <h1><%= title %> </h1>
+  <% if (genre_list.length == 0) { %>
+    <p>There are no genres.</p>
+  <% } %>
+  <ul>
+    <% for (let genre of genre_list) { %>
+    <li><a href=<%= genre.url %>><%= genre.name %></a></li>
+    <% } %>
+  </ul>
+  <a class="btn btn-primary" href="genre/new">Add Genre</a>
+</body>
