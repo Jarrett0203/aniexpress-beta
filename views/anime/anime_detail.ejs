@@ -16,6 +16,19 @@
     <p>Season: <%= anime.season %> </p>
     <p>Start Date: <%= anime.start_date_formatted %> </p>
     <p>End Date: <%= anime.end_date_formatted %> </p>
+    <p>Genres:
+      <% let count = 0; %>
+      <% for(val of anime.genre) { %>
+      <% 
+            let string = val.name 
+            count++;
+            if (count != anime.genre.length) {
+              string += "," ;
+            }
+          %>
+      <a href=<%= val.url %>> <%= string %> </a>
+      <% } %>
+    </p>
     <hr>
     <p><a href=<%= anime.url+"/delete" %>> Delete Anime </a></p>
     <p><a href=<%= anime.url+"/update" %>> Update Anime </a></p>

@@ -1,0 +1,15 @@
+<head>
+  <title><%= title %> </title>
+</head>
+
+<div class="container-fluid">
+  <div class="d-flex flex-md-row flex-column ">
+    <div class="px-2 justify-self-center">
+      <h1><%= genre.name %> </h1>
+    </div>
+    <div class="px-2">
+      <p><a href=<%= genre.url+"/delete" %>> Delete Genre </a></p>
+      <p><a href=<%= genre.url+"/update" %>> Update Genre </a></p>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 body {
   padding: 30px;
   font: 1rem/1.5 var(--bs-font-sans-serif);
+  min-width: 576px;
 }
 
 a {

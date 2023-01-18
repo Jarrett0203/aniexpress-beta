@@ -3,6 +3,7 @@ const router = express.Router();
 const async = require("async");
 const { body, validationResult } = require("express-validator");
 const Anime = require("../models/anime");
+const Genre = require("../models/genre");
 
 router.get("/", (req, res, next) => {
   Anime.find()
@@ -21,11 +22,34 @@ router.get("/", (req, res, next) => {
 
 //handle anime create on GET.
 router.get("/new", (req, res, next) => {
-  res.render("anime/anime_form", { title: "Add Anime" });
+  async.parallel(
+    {
+      genres(callback) {
+        Genre.find(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      res.render("anime/anime_form", {
+        title: "Add Anime",
+        genres: results.genres,
+      });
+    }
+  );
 });
 
 //handle anime create on POST.
 router.post("/new", [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.genre)) {
+      req.body.genre =
+        typeof req.body.genre === "undefined" ? [] : [req.body.genre];
+    }
+    next();
+  },
+
   body("romaji")
     .trim()
     .isLength({ min: 1 })
@@ -38,16 +62,35 @@ router.post("/new", [
   body("episodes").trim().escape(),
   body("status").trim().escape(),
   body("season").trim().escape(),
+  body("genre.*").escape(),
 
   (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.render("anime/anime_form", {
-        title: "Add Anime",
-        anime: req.body,
-        errors: errors.array(),
-      });
+      async.parallel(
+        {
+          genres(callback) {
+            Genre.find(callback);
+          }
+        },
+        (err, results) => {
+          if(err) {
+            return next(err);
+          }
+  
+          for (const genre of results.genres) {
+            if (anime.genre.includes(genre._id))
+              genre.checked = "true";
+          }
+  
+          res.render("anime/anime_form", {
+            title: "Add Anime",
+            anime: req.body,
+            genres: results.genres,
+            errors: errors.array(),
+          });
+        });
       return;
     }
     const anime = new Anime({
@@ -62,6 +105,7 @@ router.post("/new", [
       start_date: req.body.start_date == "" ? "Unknown" : req.body.start_date,
       end_date: req.body.end_date == "" ? "Unknown" : req.body.end_date,
       season: req.body.season == "" ? "Unknown" : req.body.season,
+      genre: req.body.genre
     });
 
     anime.save(function (err) {
@@ -76,22 +120,24 @@ router.post("/new", [
 
 //GET request for one anime.
 router.get("/:id", (req, res, next) => {
-  Anime.findById(req.params.id).exec(function (err, anime) {
-    if (err) {
-      return next(err);
-    }
+  Anime.findById(req.params.id)
+    .populate("genre")
+    .exec(function (err, anime) {
+      if (err) {
+        return next(err);
+      }
 
-    if (anime == null) {
-      const err = new Error("Anime not found");
-      err.status = 404;
-      return next(err);
-    }
+      if (anime == null) {
+        const err = new Error("Anime not found");
+        err.status = 404;
+        return next(err);
+      }
 
-    res.render("anime/anime_detail", {
-      title: anime.romaji,
-      anime,
+      res.render("anime/anime_detail", {
+        title: anime.romaji,
+        anime,
+      });
     });
-  });
 });
 
 //GET request for anime delete.
@@ -107,7 +153,7 @@ router.get("/:id/delete", (req, res, next) => {
 
     res.render("anime/anime_delete", {
       title: anime.romaji,
-      anime
+      anime,
     });
   });
 });
