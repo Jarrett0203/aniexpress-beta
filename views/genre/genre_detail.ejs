@@ -2,14 +2,30 @@
   <title><%= title %> </title>
 </head>
 
-<div class="container-fluid">
-  <div class="d-flex flex-md-row flex-column ">
-    <div class="px-2 justify-self-center">
-      <h1><%= genre.name %> </h1>
-    </div>
-    <div class="px-2">
-      <p><a href=<%= genre.url+"/delete" %>> Delete Genre </a></p>
-      <p><a href=<%= genre.url+"/update" %>> Update Genre </a></p>
+<body>
+  <div class="container-fluid">
+    <div class="d-flex flex-md-row flex-column ">
+      <div class="px-2 justify-self-center">
+        <h1><%= genre.name %> </h1>
+      </div>
+      <div class="px-2">
+        <p><a href=<%= genre.url+"/delete" %>> Delete Genre </a></p>
+        <p><a href=<%= genre.url+"/update" %>> Update Genre </a></p>
+      </div>
     </div>
   </div>
-</div>
+  <div class="container-fluid">
+    <h4>Anime</h4>
+    <% if (genre_animes.length == 0) { %>
+    <p>This genre has no anime added yet.</p>
+    <% } %>
+    <dl>
+      <% genre_animes.forEach(anime => { %>
+      <dt>
+        <a href=<%= anime.url %>> <%= anime.romaji %> </a>
+      </dt>
+      <dd><%= anime.summary %> </dd>
+      <% }) %>
+    </dl>
+  </div>
+</body>
