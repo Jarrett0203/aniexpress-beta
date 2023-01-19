@@ -43,9 +43,9 @@ router.get("/new", (req, res, next) => {
 //handle anime create on POST.
 router.post("/new", [
   (req, res, next) => {
-    if (!Array.isArray(req.body.genre)) {
-      req.body.genre =
-        typeof req.body.genre === "undefined" ? [] : [req.body.genre];
+    if (!Array.isArray(req.body.genres)) {
+      req.body.genres =
+        typeof req.body.genres === "undefined" ? [] : [req.body.genres];
     }
     next();
   },
@@ -80,7 +80,7 @@ router.post("/new", [
           }
   
           for (const genre of results.genres) {
-            if (anime.genre.includes(genre._id))
+            if (anime.genres.includes(genre._id))
               genre.checked = "true";
           }
   
@@ -105,7 +105,7 @@ router.post("/new", [
       start_date: req.body.start_date == "" ? "Unknown" : req.body.start_date,
       end_date: req.body.end_date == "" ? "Unknown" : req.body.end_date,
       season: req.body.season == "" ? "Unknown" : req.body.season,
-      genre: req.body.genre
+      genres: req.body.genres
     });
 
     anime.save(function (err) {
@@ -121,7 +121,7 @@ router.post("/new", [
 //GET request for one anime.
 router.get("/:id", (req, res, next) => {
   Anime.findById(req.params.id)
-    .populate("genre")
+    .populate("genres")
     .exec(function (err, anime) {
       if (err) {
         return next(err);

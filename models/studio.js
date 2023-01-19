@@ -10,7 +10,7 @@ const StudioSchema = new Schema({
 // Virtual for studio's URL
 StudioSchema.virtual("url").get(function () {
   // We don't use an arrow function as we'll need the this object
-  return `studio/${this._id}`;
+  return `/studio/${this._id}`;
 });
 
 module.exports = mongoose.model("Studio", StudioSchema);

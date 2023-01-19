@@ -14,7 +14,7 @@ const AnimeSchema = new Schema({
   start_date: { type: Date },
   end_date: { type: Date },
   season: { type: String },
-  genre: [{type: Schema.Types.ObjectId, ref: "Genre"}],
+  genres: [{type: Schema.Types.ObjectId, ref: "Genre"}],
 });
 
 AnimeSchema.virtual("url").get(function () {

@@ -18,15 +18,15 @@
     <p>End Date: <%= anime.end_date_formatted %> </p>
     <p>Genres:
       <% let count = 0; %>
-      <% for(val of anime.genre) { %>
+      <% for(genre of anime.genres) { %>
       <% 
-            let string = val.name 
-            count++;
-            if (count != anime.genre.length) {
-              string += "," ;
-            }
-          %>
-      <a href=<%= val.url %>> <%= string %> </a>
+        let string = genre.name 
+        count++;
+        if (count != anime.genres.length) {
+          string += "," ;
+        }
+      %>
+      <a href=<%= genre.url %>> <%= string %> </a>
       <% } %>
     </p>
     <hr>

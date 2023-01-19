@@ -66,13 +66,15 @@
       <input class="datepicker" id="start_date" placeholder="Start Date" name="start_date" value=<%= start_date %>>
       <input class="datepicker" id="end_date" placeholder="End Date" name="end_date" value=<%= end_date %>>
     </div>
-    <h3>Genres</h3>
-    <% for(let genre of genres) { %>
-      <div style="display:inline; padding-right: 10px;">
-        <input type="checkbox" class="checkbox-input" name="genre" id="<%= genre._id %>" value="<%= genre._id %>" <%= genre.checked ? "checked" : '' %>>
-        <label for="<%=genre._id%>"><%= genre.name %> </label>
+    <div class="genre-options">
+      <h3>Genres</h3>
+      <% for(let genre of genres) { %>
+      <div class="form-check form-check-inline">
+        <input type="checkbox" class="form-check-input" name="genres" id="<%= genre._id %>" value="<%= genre._id %>" <%= genre.checked ? "checked" : '' %>>
+        <label class="form-check-label" for="<%=genre._id%>"><%= genre.name %> </label>
       </div>
       <% } %>
+    </div>
     <button class="btn btn-primary fs-5" type="submit">Submit</button>
   </form>
   <% if (typeof errors != 'undefined') { %> <div class="alert alert-danger" role="alert">
